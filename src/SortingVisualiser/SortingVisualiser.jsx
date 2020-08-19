@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./SortingVisualiser.scss";
 
+import { mergeSort } from '../SortingAlgorithms/MergeSort.jsx';
 import { bubbleSort } from '../SortingAlgorithms/BubbleSort.jsx';
 
 export function SortingVisualiser() {
@@ -27,6 +28,37 @@ const resetArray = () => {
     setArray(array);
 }
 
+const mergeSortAnimation = () => {
+  // animations array is actually split every three values which each contain an array of two values [i, j]. The first and second value are repeated to animate the flash (changing colour) of the bars and the third value contains values for sorting the actual bars.
+  const animations = mergeSort(arr)
+  const arrayBars = document.getElementsByClassName('array-bar');
+  for (let i = 0; i < animations.length; i++) {
+
+
+      const isColourChange = i % 3 !== 2; // Every 3rd value is the sorting animation so every other time it is a colour change animation
+
+      if (isColourChange) {
+          const [barOneIndex, barTwoIndex] = animations[i];
+          console.log(barTwoIndex);
+          const barOneStyle = arrayBars[barOneIndex].style;
+          const barTwoStyle = arrayBars[barTwoIndex].style;
+
+          const colour = i % 3 === 0 ? SECONDARY_COLOUR : PRIMARY_COLOUR; // To animate the flashing bars
+          setTimeout(() => {
+              barOneStyle.backgroundColor = colour;
+              barTwoStyle.backgroundColor = colour;
+          }, i * ANIMATION_SPEED);
+      }
+      // This happens on the third value in the array (.push k in sortingAlgorithms doMerge function)
+      else {
+          setTimeout(() => {
+              const [barOneIndex, newHeight] = animations[i];
+              const barOneStyle = arrayBars[barOneIndex].style;
+              barOneStyle.height = `${newHeight}px`;
+          }, i * ANIMATION_SPEED);
+      }
+  }
+}
 
 const bubbleSortAnimation = () => {
   const animations = bubbleSort(arr)
@@ -76,7 +108,7 @@ const bubbleSortAnimation = () => {
       </div>
       <div className="buttons">
         <button>Generate New Array</button>
-        <button>Merge Sort</button>
+        <button onClick={mergeSortAnimation}>Merge Sort</button>
         <button onClick={bubbleSortAnimation}>Bubble Sort</button>
         <button>Quick Sort</button>
         <button>Insertion Sort</button>
