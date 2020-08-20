@@ -3,6 +3,8 @@ import "./SortingVisualiser.scss";
 
 import { mergeSort } from '../SortingAlgorithms/MergeSort.jsx';
 import { bubbleSort } from '../SortingAlgorithms/BubbleSort.jsx';
+import { insertionSort } from '../SortingAlgorithms/InsertionSort.jsx';
+
 
 export function SortingVisualiser() {
   const [arr, setArray] = useState([]);
@@ -92,6 +94,34 @@ const bubbleSortAnimation = () => {
   }
 }
 
+const insertionSortAnimation = () => {
+  const animations = insertionSort(arr);
+  for (let i = 0; i < animations.length; i++) {
+      const isColourChange = (animations[i][0] === "comparision1") || (animations[i][0] === "comparision2");
+      const arrayBars = document.getElementsByClassName('array-bar');
+      if (isColourChange === true) {
+          const colour = (animations[i][0] === "comparision1") ? SECONDARY_COLOUR : PRIMARY_COLOUR;
+          // eslint-disable-next-line
+          const [temp, barOneIndex, barTwoIndex] = animations[i];
+          console.log(barOneIndex)
+          const barOneStyle = arrayBars[barOneIndex].style;
+          const barTwoStyle = arrayBars[barTwoIndex].style;
+          setTimeout(() => {
+              barOneStyle.backgroundColor = colour;
+              barTwoStyle.backgroundColor = colour;
+          }, i * ANIMATION_SPEED);
+      }
+      else {
+          // eslint-disable-next-line
+          const [temp, barIndex, newHeight] = animations[i];
+          const barStyle = arrayBars[barIndex].style;
+          setTimeout(() => {
+              barStyle.height = `${newHeight}px`;
+          }, i * ANIMATION_SPEED);
+      }
+  }
+}
+
   return (
     <div className="array-container">
       <header>
@@ -111,7 +141,7 @@ const bubbleSortAnimation = () => {
         <button onClick={mergeSortAnimation}>Merge Sort</button>
         <button onClick={bubbleSortAnimation}>Bubble Sort</button>
         <button>Quick Sort</button>
-        <button>Insertion Sort</button>
+        <button onClick={insertionSortAnimation}>Insertion Sort</button>
       </div>
     </div>
   );
