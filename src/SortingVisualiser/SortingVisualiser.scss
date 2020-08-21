@@ -1,10 +1,68 @@
+$primary-colour: #fafaf9;
+$primary-hover: #ddddd5;
+$secondary-colour: #fff8f0;
+$text-colour: rgba(0, 0, 0, 0.8);
+
 .bar-chart {
-    height: 55vh;
-    text-align: center;
+  height: 55vh;
+  text-align: center;
+}
+
+.array-bar {
+  width: 10px;
+  display: inline-block;
+  margin: 0 1px;
+}
+
+header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+  top: 0px;
+  margin-bottom: 5rem;
+  height: 10vh;
+  background-color: $primary-colour;
+
+  h1 {
+    color: $text-colour;
+    
   }
-  
-  .array-bar {
-    width: 10px;
-    display: inline-block;
-    margin: 0 1px;
+}
+
+.buttons {
+  display: flex;
+  margin: 1rem 5rem;
+}
+
+button {
+  background-color: $primary-colour;
+  font-weight: bold;
+  letter-spacing: 0.1rem;
+  color: $text-colour;
+  width: 20%;
+  padding: 1rem;
+  border: 0;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+}
+button:focus {outline:0;}
+
+button:hover {
+  background-color: $primary-hover;
+  color: $text-colour;
+  cursor: pointer;
+}
+
+@media only screen and (max-width: 600px) {
+  .buttons {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
+    margin: 1rem 0;
   }
+  button {
+    width: 50%;
+  }
+}
